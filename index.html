@@ -1,13 +1,10 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoneyMaker Tools - Free Online Tools to Boost Your Income</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-     crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Tools Hub - Calculator, QR Generator & Text-to-Speech</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,604 +13,533 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            color: #333;
         }
 
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
+            padding: 20px;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+        header {
+            text-align: center;
+            margin-bottom: 30px;
             color: white;
-            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .nav-menu {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
         }
 
-        .nav-link {
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
             color: white;
-            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
             font-weight: 500;
             transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: #ffd700;
-            transform: translateY(-2px);
-        }
-
-        .search-box {
-            position: relative;
-            max-width: 300px;
-            width: 100%;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.8rem 1rem 0.8rem 3rem;
-            border: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .search-btn {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #ffd700;
-            color: #333;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255,215,0,0.4);
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255,215,0,0.6);
-        }
-
-        /* Tools Grid */
-        .tools-section {
-            padding: 80px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .tool-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            border: 1px solid #f0f0f0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .tool-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        /* Tool Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        /* Calculator */
-        .calculator {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .calc-inputs {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            gap: 8px;
         }
 
-        .calc-input {
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1.1rem;
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .tool-container {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .tool-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-header h2 {
+            font-size: 2rem;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        /* Calculator Styles */
+        .calculator {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .calc-display {
+            width: 100%;
+            height: 80px;
+            font-size: 2rem;
+            text-align: right;
+            padding: 20px;
+            border: none;
+            background: #f7fafc;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
+            color: #2d3748;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .calc-btn {
+            height: 60px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .calc-btn:active {
+            transform: translateY(0);
+        }
+
+        .calc-btn.number { background: linear-gradient(145deg, #e2e8f0, #cbd5e0); color: #2d3748; }
+        .calc-btn.operator { background: linear-gradient(145deg, #f56565, #e53e3e); color: white; }
+        .calc-btn.equals { background: linear-gradient(145deg, #48bb78, #38a169); color: white; grid-column: span 2; }
+        .calc-btn.clear { background: linear-gradient(145deg, #ed8936, #dd6b20); color: white; }
+
+        /* QR Code Generator */
+        .qr-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .qr-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            margin-bottom: 20px;
             transition: border-color 0.3s ease;
         }
 
-        .calc-input:focus {
+        .qr-input:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .calc-result {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .qr-generate-btn {
+            background: linear-gradient(145deg, #667eea, #764ba2);
             color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
         }
 
-        /* QR Generator */
-        .qr-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
+        .qr-generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         #qrCode {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1rem;
-            background: white;
-        }
-
-        /* Image Compressor */
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            cursor: pointer;
-            background: #667eea;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .file-input-wrapper:hover {
-            background: #5a67d8;
-        }
-
-        #imageInput {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .image-preview {
             max-width: 300px;
-            max-height: 300px;
-            border-radius: 10px;
-            margin: 1rem 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* TTS */
+        /* Text to Speech */
         .tts-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .tts-textarea {
             width: 100%;
             min-height: 150px;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            padding: 20px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            margin-bottom: 20px;
             resize: vertical;
-            font-size: 1rem;
+            font-family: inherit;
+            line-height: 1.6;
         }
 
-        .voice-controls {
+        .tts-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .tts-controls {
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
-            align-items: center;
-        }
-
-        /* Ads */
-        .ad-space {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            margin: 2rem 0;
-            border: 2px dashed #dee2e6;
-        }
-
-        /* Blog Section */
-        .blog-section {
-            background: #f8f9fa;
-            padding: 80px 0;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .blog-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .blog-image {
-            height: 200px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            display: flex;
+            gap: 15px;
             align-items: center;
             justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .voice-select, .rate-control, .pitch-control {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .voice-select:focus, .rate-control:focus, .pitch-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .tts-btn {
+            background: linear-gradient(145deg, #48bb78, #38a169);
             color: white;
-            font-size: 3rem;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .blog-content {
-            padding: 1.5rem;
+        .tts-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
         }
 
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 3rem 0 1rem;
+        .tts-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #ffd700;
-        }
-
-        .footer-bottom {
+        .status {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #34495e;
-            color: #bdc3c7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 500;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .status.speaking {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
         }
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* Responsive */
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tool-container {
+                padding: 25px 20px;
             }
 
             .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
                 flex-direction: column;
-                background-color: rgba(102, 126, 234, 0.95);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                padding: 2rem 0;
+                align-items: center;
             }
 
-            .nav-menu.active {
-                left: 0;
+            .nav-btn {
+                width: 250px;
+                justify-content: center;
             }
 
-            .search-box {
-                display: none;
+            .calc-buttons {
+                gap: 10px;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .calc-btn {
+                height: 50px;
+                font-size: 1.1rem;
             }
 
-            .tools-grid {
-                grid-template-columns: 1fr;
-                padding: 0 1rem;
-            }
-
-            .calculator {
-                grid-template-columns: 1fr;
-            }
-
-            .qr-container {
-                grid-template-columns: 1fr;
-            }
-
-            .voice-controls {
+            .tts-controls {
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            .voice-select, .rate-control, .pitch-control {
+                width: 100%;
+            }
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
+        @media (max-width: 480px) {
+            .tool-header h2 {
+                font-size: 1.5rem;
+            }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 4px;
+            .calc-display {
+                font-size: 1.5rem;
+                height: 70px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">💰 MoneyMaker Tools</a>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#tools" class="nav-link">Tools</a></li>
-                <li><a href="#blog" class="nav-link">Blog</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search tools...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    <div class="container">
+        <header>
+            <h1>🛠️ Tools Hub</h1>
+            <p>Powerful tools at your fingertips</p>
+        </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1>Boost Your Income with Free Tools</h1>
-            <p>Discover powerful online tools designed to save time, increase productivity, and maximize your earnings</p>
-            <a href="#tools" class="cta-button">Explore Tools Now</a>
-        </div>
-    </section>
+        <nav class="nav-menu">
+            <button class="nav-btn active" data-tool="calculator">
+                🧮 Calculator
+            </button>
+            <button class="nav-btn" data-tool="qr">
+                📱 QR Code Generator
+            </button>
+            <button class="nav-btn" data-tool="tts">
+                🔊 Text to Speech
+            </button>
+        </nav>
 
-    <!-- Tools Section -->
-    <section id="tools" class="tools-section">
-        <h2 class="section-title">Powerful Money-Making Tools</h2>
-        
-        <!-- Ad Space -->
-        <div class="ad-space">
-            <!-- Replace with your AdSense code -->
-            <div class="adsense-placeholder">
-                <i class="fas fa-ad" style="font-size: 2rem; color: #666; margin-bottom: 1rem;"></i>
-                <p>Ad Space - 300x250 Banner</p>
-                <small>Google AdSense Responsive Ad Unit</small>
+        <!-- Calculator Tool -->
+        <div id="calculator" class="tool-container active">
+            <div class="tool-header">
+                <h2>🧮 Calculator</h2>
+                <p>Perform quick calculations</p>
             </div>
-        </div>
-
-        <div class="tools-grid">
-            <div class="tool-card" onclick="openTool('calculator')">
-                <div class="tool-icon">
-                    <i class="fas fa-calculator"></i>
-                </div>
-                <h3>Investment Calculator</h3>
-                <p>Calculate potential returns on your investments with our compound interest calculator.</p>
-            </div>
-
-            <div class="tool-card" onclick="openTool('qr')">
-                <div class="tool-icon">
-                    <i class="fas fa-qrcode"></i>
-                </div>
-                <h3>QR Code Generator</h3>
-                <p>Create professional QR codes for your business, websites, or payment links instantly.</p>
-            </div>
-
-            <div class="tool-card" onclick="openTool('image')">
-                <div class="tool-icon">
-                    <i class="fas fa-compress-arrows-alt"></i>
-                </div>
-                <h3>Image Compressor</h3>
-                <p>Reduce image file sizes without losing quality - perfect for websites and social media.</p>
-            </div>
-
-            <div class="tool-card" onclick="openTool('tts')">
-                <div class="tool-icon">
-                    <i class="fas fa-volume-up"></i>
-                </div>
-                <h3>Text to Speech</h3>
-                <p>Convert text to natural-sounding audio for podcasts, videos, or accessibility.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tool Modals -->
-    <!-- Calculator Modal -->
-    <div id="calculatorModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeTool('calculator')">&times;</span>
-            <h2><i class="fas fa-calculator"></i> Investment Calculator</h2>
             <div class="calculator">
-                <div class="calc-inputs">
-                    <input type="number" id="principal" class="calc-input" placeholder="Initial Investment ($)" value="10000">
-                    <input type="number" id="rate" class="calc-input" placeholder="Annual Rate (%)" value="7" step="0.1">
-                    <input type="number" id="years" class="calc-input" placeholder="Years" value="10">
-                   
+                <input type="text" class="calc-display" id="calcDisplay" readonly>
+                <div class="calc-buttons">
+                    <button class="calc-btn clear" onclick="clearCalc()">C</button>
+                    <button class="calc-btn" onclick="deleteLast()">⌫</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('/')">/</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('*')">×</button>
+                    
+                    <button class="calc-btn number" onclick="appendToCalc('7')">7</button>
+                    <button class="calc-btn number" onclick="appendToCalc('8')">8</button>
+                    <button class="calc-btn number" onclick="appendToCalc('9')">9</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('-')">-</button>
+                    
+                    <button class="calc-btn number" onclick="appendToCalc('4')">4</button>
+                    <button class="calc-btn number" onclick="appendToCalc('5')">5</button>
+                    <button class="calc-btn number" onclick="appendToCalc('6')">6</button>
+                    <button class="calc-btn operator" onclick="appendToCalc('+')">+</button>
+                    
+                    <button class="calc-btn number" onclick="appendToCalc('1')">1</button>
+                    <button class="calc-btn number" onclick="appendToCalc('2')">2</button>
+                    <button class="calc-btn number" onclick="appendToCalc('3')">3</button>
+                    <button class="calc-btn equals" onclick="calculate()" rowspan="2">=</button>
+                    
+                    <button class="calc-btn number" onclick="appendToCalc('0')" style="grid-column: span 2;">0</button>
+                    <button class="calc-btn number" onclick="appendToCalc('.')">.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Generator -->
+        <div id="qr" class="tool-container">
+            <div class="tool-header">
+                <h2>📱 QR Code Generator</h2>
+                <p>Generate QR codes instantly</p>
+            </div>
+            <div class="qr-container">
+                <input type="text" class="qr-input" id="qrInput" placeholder="Enter text or URL to generate QR code...">
+                <button class="qr-generate-btn" onclick="generateQR()">Generate QR Code</button>
+                <div id="qrCode"></div>
+            </div>
+        </div>
+
+        <!-- Text to Speech -->
+        <div id="tts" class="tool-container">
+            <div class="tool-header">
+                <h2>🔊 Text to Speech</h2>
+                <p>Convert text to natural-sounding speech</p>
+            </div>
+            <div class="tts-container">
+                <textarea class="tts-textarea" id="ttsText" placeholder="Type or paste your text here..."></textarea>
+                <div class="tts-controls">
+                    <select id="voiceSelect" class="voice-select"></select>
+                    <label>Speed: <input type="range" id="rateControl" class="rate-control" min="0.5" max="2" step="0.1" value="1"></label>
+                    <label>Pitch: <input type="range" id="pitchControl" class="pitch-control" min="0.5" max="2" step="0.1" value="1"></label>
+                    <button class="tts-btn" id="speakBtn">🔊 Speak</button>
+                    <button class="tts-btn" id="stopBtn" style="display: none;">⏹️ Stop</button>
+                </div>
+                <div id="ttsStatus" class="status" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tool = btn.dataset.tool;
+                
+                // Update active button
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Show active tool
+                document.querySelectorAll('.tool-container').forEach(container => {
+                    container.classList.remove('active');
+                });
+                document.getElementById(tool).classList.add('active');
+            });
+        });
+
+        // Calculator Functions
+        let calcDisplay = document.getElementById('calcDisplay');
+        let currentInput = '0';
+
+        function appendToCalc(value) {
+            if (currentInput === '0' && value !== '.') {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            calcDisplay.value = currentInput;
+        }
+
+        function clearCalc() {
+            currentInput = '0';
+            calcDisplay.value = '0';
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            calcDisplay.value = currentInput;
+        }
+
+        function calculate() {
+            try {
+                // Replace × with * for calculation
+                let expression = currentInput.replace(/×/g, '*');
+                let result = eval(expression);
+                currentInput = result.toString();
+                calcDisplay.value = result;
+            } catch (error) {
+                calcDisplay.value = 'Error';
+                currentInput = '0';
+                setTimeout(clearCalc, 1500);
+            }
+        }
+
+        // Keyboard support for calculator
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('calculator').classList.contains('active')) {
+                if (e.key >= '0' && e.key <= '9' || e.key === '.') {
+                    appendToCalc(e.key);
+                } else if (e.key === '+' || e.key === '-') {
+                    appendToCalc(e.key);
+                } else if (e.key === '*') {
+                    appendToCalc('*');
+                } else if (e.key === '/') {
+                    appendToCalc('/');
+                } else if (e.key === 'Enter' || e.key === '=') {
+                    calculate();
+                } else if (e.key === 'Escape') {
+                    clearCalc();
+                } else if (e.key === 'Backspace') {
+                    deleteLast();
+                }
+            }
+        });
+
+        // QR Code Generator
+        function generateQR() {
+            const input = document.getElementById('qrInput');
+            const qrCodeDiv = document.getElementById('qrCode');
+            
+            if (!input.value.trim()) {
+                alert('Please enter some text to generate a QR code!');
+                return;
+            }
+
+            qrCodeDiv.innerHTML = '';
+            QRCode.toCanvas(input.value, { 
+                width: 300,
+                margin: 2,
+                color: {
+                    dark: '#2d3748',
+                    light: '#ffffff'
+                }
+            }, function (error, canvas) {
+                if (error) {
+                    console.error(error);
+                } else {
+                    qrCodeDiv.appendChild(canvas);
+                }
+            });
+        }
+
+        // Enter key support for QR input
+        document.getElementById('qrInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateQR();
+            }
+        });
+
+        // Text to Speech
+        const       
