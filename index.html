@@ -1,545 +1,81 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools Hub - Calculator, QR Generator & Text-to-Speech</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .tool-container {
-            display: none;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .tool-container.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tool-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .tool-header h2 {
-            font-size: 2rem;
-            color: #4a5568;
-            margin-bottom: 10px;
-        }
-
-        /* Calculator Styles */
-        .calculator {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .calc-display {
-            width: 100%;
-            height: 80px;
-            font-size: 2rem;
-            text-align: right;
-            padding: 20px;
-            border: none;
-            background: #f7fafc;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
-            color: #2d3748;
-        }
-
-        .calc-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .calc-btn {
-            height: 60px;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .calc-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-
-        .calc-btn:active {
-            transform: translateY(0);
-        }
-
-        .calc-btn.number { background: linear-gradient(145deg, #e2e8f0, #cbd5e0); color: #2d3748; }
-        .calc-btn.operator { background: linear-gradient(145deg, #f56565, #e53e3e); color: white; }
-        .calc-btn.equals { background: linear-gradient(145deg, #48bb78, #38a169); color: white; grid-column: span 2; }
-        .calc-btn.clear { background: linear-gradient(145deg, #ed8936, #dd6b20); color: white; }
-
-        /* QR Code Generator */
-        .qr-container {
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .qr-input {
-            width: 100%;
-            padding: 20px;
-            font-size: 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            transition: border-color 0.3s ease;
-        }
-
-        .qr-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .qr-generate-btn {
-            background: linear-gradient(145deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-        }
-
-        .qr-generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        #qrCode {
-            max-width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        /* Text to Speech */
-        .tts-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .tts-textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 20px;
-            font-size: 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            resize: vertical;
-            font-family: inherit;
-            line-height: 1.6;
-        }
-
-        .tts-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .tts-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .voice-select, .rate-control, .pitch-control {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            background: white;
-            transition: border-color 0.3s ease;
-        }
-
-        .voice-select:focus, .rate-control:focus, .pitch-control:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .tts-btn {
-            background: linear-gradient(145deg, #48bb78, #38a169);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tts-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
-        }
-
-        .tts-btn:disabled {
-            background: #a0aec0;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .status {
-            text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: 500;
-        }
-
-        .status.speaking {
-            background: #c6f6d5;
-            color: #22543d;
-            border: 1px solid #9ae6b4;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .tool-container {
-                padding: 25px 20px;
-            }
-
-            .nav-menu {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav-btn {
-                width: 250px;
-                justify-content: center;
-            }
-
-            .calc-buttons {
-                gap: 10px;
-            }
-
-            .calc-btn {
-                height: 50px;
-                font-size: 1.1rem;
-            }
-
-            .tts-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .voice-select, .rate-control, .pitch-control {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tool-header h2 {
-                font-size: 1.5rem;
-            }
-
-            .calc-display {
-                font-size: 1.5rem;
-                height: 70px;
-            }
-        }
-    </style>
+    <title>Tools Hub - Free Online Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🛠️ Tools Hub</h1>
-            <p>Powerful tools at your fingertips</p>
-        </header>
-
-        <nav class="nav-menu">
-            <button class="nav-btn active" data-tool="calculator">
-                🧮 Calculator
-            </button>
-            <button class="nav-btn" data-tool="qr">
-                📱 QR Code Generator
-            </button>
-            <button class="nav-btn" data-tool="tts">
-                🔊 Text to Speech
-            </button>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-tools"></i>
+                    <span>Tools Hub</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calculator.html" class="nav-link">
+                            <i class="fas fa-calculator"></i> Calculator
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="qr-generator.html" class="nav-link">
+                            <i class="fas fa-qrcode"></i> QR Generator
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="tts.html" class="nav-link">
+                            <i class="fas fa-volume-up"></i> Text to Speech
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </nav>
+    </header>
 
-        <!-- Calculator Tool -->
-        <div id="calculator" class="tool-container active">
-            <div class="tool-header">
-                <h2>🧮 Calculator</h2>
-                <p>Perform quick calculations</p>
-            </div>
-            <div class="calculator">
-                <input type="text" class="calc-display" id="calcDisplay" readonly>
-                <div class="calc-buttons">
-                    <button class="calc-btn clear" onclick="clearCalc()">C</button>
-                    <button class="calc-btn" onclick="deleteLast()">⌫</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('/')">/</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('*')">×</button>
-                    
-                    <button class="calc-btn number" onclick="appendToCalc('7')">7</button>
-                    <button class="calc-btn number" onclick="appendToCalc('8')">8</button>
-                    <button class="calc-btn number" onclick="appendToCalc('9')">9</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('-')">-</button>
-                    
-                    <button class="calc-btn number" onclick="appendToCalc('4')">4</button>
-                    <button class="calc-btn number" onclick="appendToCalc('5')">5</button>
-                    <button class="calc-btn number" onclick="appendToCalc('6')">6</button>
-                    <button class="calc-btn operator" onclick="appendToCalc('+')">+</button>
-                    
-                    <button class="calc-btn number" onclick="appendToCalc('1')">1</button>
-                    <button class="calc-btn number" onclick="appendToCalc('2')">2</button>
-                    <button class="calc-btn number" onclick="appendToCalc('3')">3</button>
-                    <button class="calc-btn equals" onclick="calculate()" rowspan="2">=</button>
-                    
-                    <button class="calc-btn number" onclick="appendToCalc('0')" style="grid-column: span 2;">0</button>
-                    <button class="calc-btn number" onclick="appendToCalc('.')">.</button>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Free Online Tools</h1>
+                <p>Powerful, fast, and completely free tools for everyday use</p>
+                <div class="tools-grid">
+                    <a href="calculator.html" class="tool-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Calculator</h3>
+                        <p>Advanced calculator with memory functions</p>
+                    </a>
+                    <a href="qr-generator.html" class="tool-card">
+                        <i class="fas fa-qrcode"></i>
+                        <h3>QR Code Generator</h3>
+                        <p>Create custom QR codes instantly</p>
+                    </a>
+                    <a href="tts.html" class="tool-card">
+                        <i class="fas fa-volume-up"></i>
+                        <h3>Text to Speech</h3>
+                        <p>Convert text to natural-sounding speech</p>
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
+    </main>
 
-        <!-- QR Code Generator -->
-        <div id="qr" class="tool-container">
-            <div class="tool-header">
-                <h2>📱 QR Code Generator</h2>
-                <p>Generate QR codes instantly</p>
-            </div>
-            <div class="qr-container">
-                <input type="text" class="qr-input" id="qrInput" placeholder="Enter text or URL to generate QR code...">
-                <button class="qr-generate-btn" onclick="generateQR()">Generate QR Code</button>
-                <div id="qrCode"></div>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2024 Tools Hub. All rights reserved. | Made with ❤️ for developers</p>
+    </footer>
 
-        <!-- Text to Speech -->
-        <div id="tts" class="tool-container">
-            <div class="tool-header">
-                <h2>🔊 Text to Speech</h2>
-                <p>Convert text to natural-sounding speech</p>
-            </div>
-            <div class="tts-container">
-                <textarea class="tts-textarea" id="ttsText" placeholder="Type or paste your text here..."></textarea>
-                <div class="tts-controls">
-                    <select id="voiceSelect" class="voice-select"></select>
-                    <label>Speed: <input type="range" id="rateControl" class="rate-control" min="0.5" max="2" step="0.1" value="1"></label>
-                    <label>Pitch: <input type="range" id="pitchControl" class="pitch-control" min="0.5" max="2" step="0.1" value="1"></label>
-                    <button class="tts-btn" id="speakBtn">🔊 Speak</button>
-                    <button class="tts-btn" id="stopBtn" style="display: none;">⏹️ Stop</button>
-                </div>
-                <div id="ttsStatus" class="status" style="display: none;"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Navigation
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tool = btn.dataset.tool;
-                
-                // Update active button
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // Show active tool
-                document.querySelectorAll('.tool-container').forEach(container => {
-                    container.classList.remove('active');
-                });
-                document.getElementById(tool).classList.add('active');
-            });
-        });
-
-        // Calculator Functions
-        let calcDisplay = document.getElementById('calcDisplay');
-        let currentInput = '0';
-
-        function appendToCalc(value) {
-            if (currentInput === '0' && value !== '.') {
-                currentInput = value;
-            } else {
-                currentInput += value;
-            }
-            calcDisplay.value = currentInput;
-        }
-
-        function clearCalc() {
-            currentInput = '0';
-            calcDisplay.value = '0';
-        }
-
-        function deleteLast() {
-            if (currentInput.length > 1) {
-                currentInput = currentInput.slice(0, -1);
-            } else {
-                currentInput = '0';
-            }
-            calcDisplay.value = currentInput;
-        }
-
-        function calculate() {
-            try {
-                // Replace × with * for calculation
-                let expression = currentInput.replace(/×/g, '*');
-                let result = eval(expression);
-                currentInput = result.toString();
-                calcDisplay.value = result;
-            } catch (error) {
-                calcDisplay.value = 'Error';
-                currentInput = '0';
-                setTimeout(clearCalc, 1500);
-            }
-        }
-
-        // Keyboard support for calculator
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('calculator').classList.contains('active')) {
-                if (e.key >= '0' && e.key <= '9' || e.key === '.') {
-                    appendToCalc(e.key);
-                } else if (e.key === '+' || e.key === '-') {
-                    appendToCalc(e.key);
-                } else if (e.key === '*') {
-                    appendToCalc('*');
-                } else if (e.key === '/') {
-                    appendToCalc('/');
-                } else if (e.key === 'Enter' || e.key === '=') {
-                    calculate();
-                } else if (e.key === 'Escape') {
-                    clearCalc();
-                } else if (e.key === 'Backspace') {
-                    deleteLast();
-                }
-            }
-        });
-
-        // QR Code Generator
-        function generateQR() {
-            const input = document.getElementById('qrInput');
-            const qrCodeDiv = document.getElementById('qrCode');
-            
-            if (!input.value.trim()) {
-                alert('Please enter some text to generate a QR code!');
-                return;
-            }
-
-            qrCodeDiv.innerHTML = '';
-            QRCode.toCanvas(input.value, { 
-                width: 300,
-                margin: 2,
-                color: {
-                    dark: '#2d3748',
-                    light: '#ffffff'
-                }
-            }, function (error, canvas) {
-                if (error) {
-                    console.error(error);
-                } else {
-                    qrCodeDiv.appendChild(canvas);
-                }
-            });
-        }
-
-        // Enter key support for QR input
-        document.getElementById('qrInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                generateQR();
-            }
-        });
-
-        // Text to Speech
-        const       
+    <script src="script.js"></script>
+</body>
+</html>
